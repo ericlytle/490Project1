@@ -35,9 +35,5 @@ public class CarSpecs {
     }
     
     //ToDo: REMOVE. TESTING PURPOSES ONLY
-    public static void main(String[] args){
-        CarSpecs car = new CarSpecs("test", "testttt", 2001, SizeEnum.Large);
-        Map map = car.getDetails();
-        System.out.println(String.valueOf(map.get("MAKE")) + String.valueOf(map.get("MODEL")) + String.valueOf(map.get("YEAR")) + String.valueOf(map.get("SIZE")));
-    }
+    
 }
