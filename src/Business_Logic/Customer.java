@@ -27,4 +27,20 @@ public class Customer {
         
         return rentals.add(new Rental(Calendar.getInstance(), car));
     }
+    
+    public LinkedList<Rental> getRentals(){
+        return this.rentals;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public String getPhone(){
+        return this.phone;
+    }
+    
+    public String getAddress(){
+        return this.address;
+    }
 }

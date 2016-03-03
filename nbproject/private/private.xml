@@ -5,9 +5,12 @@
         <group>
             <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/SizeEnum.java</file>
             <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/StatusEnum.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/Controller.java</file>
             <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/CarSpecs.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/Customer.java</file>
             <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/Car.java</file>
             <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/Rental.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/GUI/CustomerSearch.java</file>
         </group>
     </open-files>
 </project-private>

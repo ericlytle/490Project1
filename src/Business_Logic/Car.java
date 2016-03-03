@@ -23,4 +23,8 @@ public class Car {
     public Map getDetails(){
         return this.carSpecs.getDetails();
     }
+    
+    public String getID(){
+        return this._ID;
+    }
 }

@@ -26,8 +26,12 @@ public class Rental {
         this.rentalCar = RentalCar;
     }
     
-    public void returnCar(Calendar ReturnDate){
+    public Car returnCar(Calendar ReturnDate){
         this.returnDate = ReturnDate;
         this.status = StatusEnum.Returned;
+        return this.rentalCar;
+    }
+    public Car getCar(){
+        return this.rentalCar;
     }
 }

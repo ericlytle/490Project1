@@ -31,7 +31,7 @@ public class CarSpecs {
     }
     
     public Map getDetails(){
-        return details;
+        return this.details;
     }
     
     //ToDo: REMOVE. TESTING PURPOSES ONLY
