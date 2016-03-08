@@ -10,6 +10,7 @@ import Business_Logic.Controller;
 import Business_Logic.Customer;
 import Business_Logic.SizeEnum;
 import java.util.LinkedList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Eric
  */
 public class CustomerSearch extends javax.swing.JFrame {
-    //Controller controller;
+    Controller controller = Controller.instance();
     /**
      * Creates new form CustomerSearch
      */
@@ -123,9 +124,9 @@ public class CustomerSearch extends javax.swing.JFrame {
 //        
 //    }
     private void LoadAllCustomers(){
-        LinkedList<Customer> temp;
+        List<Customer> temp;
         DefaultTableModel yourModel = (DefaultTableModel) jTable1.getModel();
-        temp = Controller.getAllCustomers();
+        temp = controller.getAllCustomers();
         for (Customer cust:temp){
             yourModel.addRow(new Object[]{cust.getName(), cust.getPhone(), cust.getAddress()});
         }

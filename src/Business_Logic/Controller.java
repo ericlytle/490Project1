@@ -6,8 +6,10 @@
 package Business_Logic;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,18 +17,26 @@ import java.util.Map;
  * @author Eric
  */
 public class Controller {
-    private static LinkedList<Car> availCars = new LinkedList<>();
-    private static LinkedList<Customer> customers = new LinkedList<>();
+    private static Controller singleton;
+    private LinkedList<Car> availCars = new LinkedList<>();
+    private LinkedList<Customer> customers = new LinkedList<>();
 
-    public static void addCar(Car car){
+    public static Controller instance(){
+        if (singleton == null){
+            singleton = new Controller();
+        }
+        return singleton;
+    }
+    
+    public void addCar(Car car){
         availCars.add(car);
     }
     
-    public static LinkedList<Customer> getAllCustomers(){
-        return customers;
+    public List<Customer> getAllCustomers(){
+        return Collections.unmodifiableList(customers);
     }
     
-    public static void addCustomer(Customer cust){
+    public void addCustomer(Customer cust){
         customers.add(cust);
     }
     public void rentCar(String CarID, Customer Cust){

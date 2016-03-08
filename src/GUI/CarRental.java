@@ -38,7 +38,7 @@ public class CarRental {
             java.util.logging.Logger.getLogger(CustomerSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        Controller controller = new Controller();
+        Controller controller = Controller.instance();
         
         CarSpecs Fusion = new CarSpecs("Ford", "Fusion", 2014, SizeEnum.Midsize);
         CarSpecs Escape = new CarSpecs("Ford", "Escape", 2001, SizeEnum.Large);
