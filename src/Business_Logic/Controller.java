@@ -20,6 +20,9 @@ public class Controller {
     private static Controller singleton;
     private LinkedList<Car> availCars = new LinkedList<>();
     private LinkedList<Customer> customers = new LinkedList<>();
+    
+    //The customer whose account is to be viewed.
+    private Customer selectedCustomer; 
 
     public static Controller instance(){
         if (singleton == null){
@@ -39,6 +42,25 @@ public class Controller {
     public void addCustomer(Customer cust){
         customers.add(cust);
     }
+    
+    //Returns a list of customers that contain/satisfy the search criteria.
+    public List<Customer> customerSearch(String query)
+    {
+        List<Customer> results = new LinkedList<>();
+        
+        for (Customer customer : customers)
+        {
+            if (customer.getName().toLowerCase().contains(query) ||
+                    customer.getPhone().toLowerCase().contains(query) ||
+                    customer.getAddress().toLowerCase().contains(query))
+            {
+                results.add(customer);
+            }
+        }
+                
+        return results;
+    }
+    
     public void rentCar(String CarID, Customer Cust){
         for (Car car: availCars){
             if (car.getID().equals(CarID)){
@@ -54,6 +76,12 @@ public class Controller {
                 availCars.add(rental.returnCar(Calendar.getInstance()));
             }
         }
+    }
+    
+    //Returns the selected customer.
+    public Customer getSelectedCustomer()
+    {
+        return selectedCustomer;
     }
     
     //(String make, String model, int year, SizeEnum size){
