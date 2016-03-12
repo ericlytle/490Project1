@@ -6,23 +6,27 @@
 package GUI;
 
 import Business_Logic.*;
+import java.awt.Font;
 /**
  *
  * @author Tamas
  */
 public class AccountView extends javax.swing.JFrame {
+    Controller controller = Controller.instance();
 
     //Constructor
     public AccountView() {
-        initComponents();
+        initComponents();       
     }
     
-    //The custome whose account will be viewed.
-    private Customer selectedCustomer;
-    public void setSelectedCustomer(Customer customer)
+    //Updates the customer's name on the GUI.
+    public void updateAccount()
     {
-        selectedCustomer = customer;
-        lblCustomerName.setText(selectedCustomer.getName() + "'s Account");
+        //Make only the customer's name bold.
+        String custName = "<html><b>" + controller.getSelectedCustomer().getName() + "</b>'s Account</html>";
+        lblCustomerName.setText(custName);
+        //Derive 'special' bold font.
+        lblCustomerName.setFont(lblCustomerName.getFont().deriveFont(Font.PLAIN));
     }
     
     //Sets the specified tab to show when AccountView is first displayed.
@@ -76,9 +80,9 @@ public class AccountView extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(23, 23, 23)
                 .addComponent(lblCustomerName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tabContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );

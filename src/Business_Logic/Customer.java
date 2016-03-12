@@ -17,6 +17,14 @@ public class Customer {
     private String phone;
     private String address;
     private LinkedList<Rental> rentals = new LinkedList<>();
+    
+    public Customer()
+    {
+        this.name = "";
+        this.phone = "";
+        this.address = "";
+    }
+    
     public Customer(String Name, String Phone, String Address){
         this.name = Name;
         this.phone = Phone;

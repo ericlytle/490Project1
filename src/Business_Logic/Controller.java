@@ -21,8 +21,39 @@ public class Controller {
     private LinkedList<Car> availCars = new LinkedList<>();
     private LinkedList<Customer> customers = new LinkedList<>();
     
+    //*******************************************************************    
+    //This is updated with customers from the search result
+    private LinkedList<Customer> searchResults = new LinkedList<>();
+    
     //The customer whose account is to be viewed.
-    private Customer selectedCustomer; 
+    private Customer selectedCustomer;
+    
+    //Return the selected Customer;
+    public Customer getSelectedCustomer()
+    {
+        return selectedCustomer;
+    }
+    
+    public void addSearchCustomer(Customer customer)
+    {
+        searchResults.add(customer);
+    }
+    
+    public List<Customer> getSearchResults()
+    {
+        return Collections.unmodifiableList(searchResults);
+    }
+    
+    public void resetSearchResults()
+    {
+        searchResults.clear();
+    }
+    
+    public void setSelectedCustomer(Customer cust)
+    {
+        selectedCustomer = cust;
+    }
+    //*******************************************************************
 
     public static Controller instance(){
         if (singleton == null){
@@ -76,12 +107,6 @@ public class Controller {
                 availCars.add(rental.returnCar(Calendar.getInstance()));
             }
         }
-    }
-    
-    //Returns the selected customer.
-    public Customer getSelectedCustomer()
-    {
-        return selectedCustomer;
     }
     
     //(String make, String model, int year, SizeEnum size){

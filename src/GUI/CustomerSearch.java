@@ -33,7 +33,7 @@ public class CustomerSearch extends javax.swing.JFrame {
         tblCustomers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
-    //Verify that a user is selected before preceding.
+    //Verify that a user is selected before proceding.
     public boolean checkSelection()
     {
         if (tblCustomers.getSelectedRow() == -1){
@@ -42,9 +42,14 @@ public class CustomerSearch extends javax.swing.JFrame {
         }
         else
         {
-            //Set the selected customer
-            //Still need to figure this one out.
-            //Fetching Customer object from tblCustomers selection didn't work.
+            //Find the selected element in the customer's table.
+            int rowIndex = tblCustomers.getSelectedRow();
+            
+            //Retrive the corresponding customer with the selected row's index value.
+            controller.setSelectedCustomer(controller.getSearchResults().get(rowIndex));
+            
+            //Update the GUI label with the customer name.
+            accountView.updateAccount(); 
             return true;
         }
         
@@ -179,7 +184,8 @@ public class CustomerSearch extends javax.swing.JFrame {
         DefaultTableModel blankModel = (DefaultTableModel) tblCustomers.getModel();
         blankModel.setRowCount(0);
         
-        //Search for the customers and repopulate table.
+        //Reset existing search results and search for the customers to repopulate table.
+        controller.resetSearchResults();
         LoadAllCustomers(controller.customerSearch(txtSearch.getText().trim().toLowerCase()));
         
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -187,8 +193,8 @@ public class CustomerSearch extends javax.swing.JFrame {
     private void LoadAllCustomers(List<Customer> customers){
         DefaultTableModel yourModel = (DefaultTableModel) tblCustomers.getModel();
         for (Customer cust:customers){
-            //Hiding the customer object in the row for access after selection (This probably won't work).
-            yourModel.addRow(new Object[]{cust.getName(), cust.getPhone(), cust.getAddress(), cust});
+            yourModel.addRow(new Object[]{cust.getName(), cust.getPhone(), cust.getAddress()});
+            controller.addSearchCustomer(cust); //Add customer to search results list.
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
