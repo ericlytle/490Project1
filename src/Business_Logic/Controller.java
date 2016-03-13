@@ -85,7 +85,6 @@ public class Controller {
         return carSearchResults;
     }
     
-    
     public List<Customer> getAllCustomers(){
         return Collections.unmodifiableList(customers);
     }

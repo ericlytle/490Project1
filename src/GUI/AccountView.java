@@ -74,6 +74,7 @@ public class AccountView extends javax.swing.JFrame {
             car.getDetails().get("MODEL"), car.getDetails().get("YEAR"), car.getDetails().get("SIZE")});
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
