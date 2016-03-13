@@ -40,18 +40,26 @@ public class CarRental {
         //</editor-fold>
         Controller controller = Controller.instance();
         
-        CarSpecs Fusion = new CarSpecs("Ford", "Fusion", 2014, SizeEnum.Midsize);
-        CarSpecs Escape = new CarSpecs("Ford", "Escape", 2001, SizeEnum.Large);
-        CarSpecs Corvette = new CarSpecs("Chevrolet", "Corvette", 2016, SizeEnum.Small);
-
+        
+        //Create customers, car specs, and cars.
         Customer Jim = new Customer("Jim", "8168888888", "123 School Street");
         Customer Brett = new Customer("Brett", "8176534343", "123 University Street");
         Customer Victor = new Customer("Victor", "9987776543", "123 Elementary Street");
+        
+        CarSpecs Fusion = new CarSpecs("Ford", "Fusion", 2014, SizeEnum.Midsize);
+        CarSpecs Escape = new CarSpecs("Ford", "Escape", 2001, SizeEnum.Large);
+        CarSpecs Corvette = new CarSpecs("Chevrolet", "Corvette", 2016, SizeEnum.Small);
+        CarSpecs BMW740iL = new CarSpecs("BMW", "740iL", 1996, SizeEnum.Large);
+        CarSpecs MercedesSL500 = new CarSpecs("Mercedes","SL500", 2007, SizeEnum.Small);
 
         Car Fusion_1 = new Car("1FF", Fusion);
         Car Escape_1 = new Car("1FE", Escape);
         Car Corvette_1 = new Car("1CC", Corvette);
+        Car BMW_1 = new Car("3A2", BMW740iL);
+        Car Mercedes_1 = new Car("5BB",MercedesSL500);
         
+        
+        //Add customers and cars.
         controller.addCustomer(Jim);
         controller.addCustomer(Brett);
         controller.addCustomer(Victor);
@@ -59,8 +67,11 @@ public class CarRental {
         controller.addCar(Fusion_1);
         controller.addCar(Escape_1);
         controller.addCar(Corvette_1);
+        controller.addCar(BMW_1);
+        controller.addCar(Mercedes_1);
         
-        controller.rentCar("1FF", Brett);
+        //controller.rentCar("1FF", Brett);
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

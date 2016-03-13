@@ -27,4 +27,15 @@ public class Car {
     public String getID(){
         return this._ID;
     }
+    
+    //Represent a car object as a string.
+    @Override
+    public String toString()
+    {
+        String carAsString = this._ID + ", " + this.carSpecs.getDetails().get("MAKE")+
+        ", " + this.carSpecs.getDetails().get("MODEL")+", " + this.carSpecs.getDetails().get("YEAR").toString()+
+        ", " + this.carSpecs.getDetails().get("SIZE").toString();
+        
+        return carAsString;
+    }
 }
