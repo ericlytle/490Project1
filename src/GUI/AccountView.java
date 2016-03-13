@@ -54,16 +54,185 @@ public class AccountView extends javax.swing.JFrame {
 
         lblCustomerName = new javax.swing.JLabel();
         tabContainer = new javax.swing.JTabbedPane();
-        tabFindCar = new javax.swing.JTabbedPane();
-        tabRentedCars = new javax.swing.JTabbedPane();
-        tabReturnedCars = new javax.swing.JTabbedPane();
+        tabFindCar = new javax.swing.JPanel();
+        txtFindCar = new javax.swing.JTextField();
+        btnFindCarSearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAvailableRentals = new javax.swing.JTable();
+        btnRentSelected = new javax.swing.JButton();
+        tabRentedCars = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblRentedCars = new javax.swing.JTable();
+        btnReturnSelected = new javax.swing.JButton();
+        tabReturnedCars = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblAvailableRentals1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblCustomerName.setText("Customer's Account");
 
+        btnFindCarSearch.setLabel("Search");
+
+        tblAvailableRentals.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Select", "ID", "Make", "Model", "Year", "Size"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblAvailableRentals);
+
+        btnRentSelected.setText("Rent Selected");
+
+        javax.swing.GroupLayout tabFindCarLayout = new javax.swing.GroupLayout(tabFindCar);
+        tabFindCar.setLayout(tabFindCarLayout);
+        tabFindCarLayout.setHorizontalGroup(
+            tabFindCarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabFindCarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tabFindCarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabFindCarLayout.createSequentialGroup()
+                        .addComponent(txtFindCar, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnFindCarSearch))
+                    .addComponent(btnRentSelected)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        tabFindCarLayout.setVerticalGroup(
+            tabFindCarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabFindCarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tabFindCarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFindCar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFindCarSearch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRentSelected)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
+        );
+
         tabContainer.addTab("Find Car", tabFindCar);
+
+        tblRentedCars.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Select", "Make", "Model", "Year", "Rented"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblRentedCars);
+
+        btnReturnSelected.setText("Return Selected");
+
+        javax.swing.GroupLayout tabRentedCarsLayout = new javax.swing.GroupLayout(tabRentedCars);
+        tabRentedCars.setLayout(tabRentedCarsLayout);
+        tabRentedCarsLayout.setHorizontalGroup(
+            tabRentedCarsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabRentedCarsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tabRentedCarsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReturnSelected))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        tabRentedCarsLayout.setVerticalGroup(
+            tabRentedCarsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabRentedCarsLayout.createSequentialGroup()
+                .addContainerGap(42, Short.MAX_VALUE)
+                .addComponent(btnReturnSelected)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
+        );
+
         tabContainer.addTab("Rented Cars", tabRentedCars);
+
+        tblAvailableRentals1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Make", "Model", "Year", "Rented", "Returned"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblAvailableRentals1);
+
+        javax.swing.GroupLayout tabReturnedCarsLayout = new javax.swing.GroupLayout(tabReturnedCars);
+        tabReturnedCars.setLayout(tabReturnedCarsLayout);
+        tabReturnedCarsLayout.setHorizontalGroup(
+            tabReturnedCarsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabReturnedCarsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
+        );
+        tabReturnedCarsLayout.setVerticalGroup(
+            tabReturnedCarsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabReturnedCarsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         tabContainer.addTab("Returned Cars", tabReturnedCars);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -73,28 +242,40 @@ public class AccountView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCustomerName))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCustomerName)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(tabContainer))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(lblCustomerName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tabContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                .addGap(16, 16, 16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFindCarSearch;
+    private javax.swing.JButton btnRentSelected;
+    private javax.swing.JButton btnReturnSelected;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblCustomerName;
     private javax.swing.JTabbedPane tabContainer;
-    private javax.swing.JTabbedPane tabFindCar;
-    private javax.swing.JTabbedPane tabRentedCars;
-    private javax.swing.JTabbedPane tabReturnedCars;
+    private javax.swing.JPanel tabFindCar;
+    private javax.swing.JPanel tabRentedCars;
+    private javax.swing.JPanel tabReturnedCars;
+    private javax.swing.JTable tblAvailableRentals;
+    private javax.swing.JTable tblAvailableRentals1;
+    private javax.swing.JTable tblRentedCars;
+    private javax.swing.JTextField txtFindCar;
     // End of variables declaration//GEN-END:variables
 }
