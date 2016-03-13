@@ -7,6 +7,8 @@ package GUI;
 
 import Business_Logic.*;
 import java.awt.Font;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Tamas
@@ -16,7 +18,10 @@ public class AccountView extends javax.swing.JFrame {
 
     //Constructor
     public AccountView() {
-        initComponents();       
+        initComponents();     
+        populateAvailCars();
+        
+        
     }
     
     //Updates the customer's name on the GUI.
@@ -27,6 +32,32 @@ public class AccountView extends javax.swing.JFrame {
         lblCustomerName.setText(custName);
         //Derive 'special' bold font.
         lblCustomerName.setFont(lblCustomerName.getFont().deriveFont(Font.PLAIN));
+        populateRentedCars();
+    }
+    private void populateRentedCars()
+    {
+        DefaultTableModel dTableModel = (DefaultTableModel) tblRentedCars.getModel();
+        //remove all rows before populating them
+        dTableModel.setRowCount(0);
+        for (Rental rental : controller.getSelectedCustomer().getRentals())
+        {
+            Map rentedCarDetails = rental.getCar().getDetails();
+            dTableModel.addRow(new Object[]{false, rentedCarDetails.get("MALE"),
+                rentedCarDetails.get("MODEL"),
+                rentedCarDetails.get("YEAR"),
+                rental.getRentDate()
+            });
+        }
+    }
+    private void populateAvailCars()
+    {
+        DefaultTableModel dTableModel = (DefaultTableModel) tblAvailableRentals.getModel();
+        //remove all rows before populating them
+        dTableModel.setRowCount(0);
+        for (Car car : controller.getAvailableCars())
+        {
+            dTableModel.addRow(new Object[]{false,car.getID(), car.getDetails().get("MAKE"), car.getDetails().get("MODEL"), car.getDetails().get("YEAR"), car.getDetails().get("SIZE")});
+        }
     }
     
     //Sets the specified tab to show when AccountView is first displayed.

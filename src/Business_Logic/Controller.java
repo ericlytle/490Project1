@@ -26,7 +26,7 @@ public class Controller {
     private LinkedList<Customer> searchResults = new LinkedList<>();
     
     //The customer whose account is to be viewed.
-    private Customer selectedCustomer;
+    private Customer selectedCustomer = new Customer();
     
     //Return the selected Customer;
     public Customer getSelectedCustomer()
@@ -68,6 +68,10 @@ public class Controller {
     
     public List<Customer> getAllCustomers(){
         return Collections.unmodifiableList(customers);
+    }
+    
+    public List<Car> getAvailableCars(){
+        return Collections.unmodifiableList(availCars);
     }
     
     public void addCustomer(Customer cust){

@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Tamas/Desktop/490Project1/src/GUI/AccountView.java</file>
-            <file>file:/C:/Users/Tamas/Desktop/490Project1/src/GUI/CarRental.java</file>
-            <file>file:/C:/Users/Tamas/Desktop/490Project1/src/Business_Logic/Customer.java</file>
-            <file>file:/C:/Users/Tamas/Desktop/490Project1/src/Business_Logic/Controller.java</file>
-            <file>file:/C:/Users/Tamas/Desktop/490Project1/src/GUI/CustomerSearch.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/GUI/AccountView.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/Controller.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/Customer.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/Business_Logic/Rental.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/GUI/CarRental.java</file>
+            <file>file:/Users/Eric/NetBeansProjects/490Project1/src/GUI/CustomerSearch.java</file>
         </group>
     </open-files>
 </project-private>

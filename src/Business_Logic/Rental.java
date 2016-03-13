@@ -34,4 +34,9 @@ public class Rental {
     public Car getCar(){
         return this.rentalCar;
     }
+    
+    public String getRentDate(){
+        //return rented date in DAY/MONTH/YEAR format
+        return this.rentDate.get(Calendar.MONTH) + "/" + this.rentDate.get(Calendar.DAY_OF_MONTH) + "/" + this.rentDate.get(Calendar.YEAR);
+    }
 }
