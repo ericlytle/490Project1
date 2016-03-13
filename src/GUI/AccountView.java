@@ -7,6 +7,8 @@ package GUI;
 
 import Business_Logic.*;
 import java.awt.Font;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -18,10 +20,8 @@ public class AccountView extends javax.swing.JFrame {
 
     //Constructor
     public AccountView() {
-        initComponents();     
-        populateAvailCars();
-        
-        
+        initComponents();
+        loadAvailableCars(controller.getAvailableCars());
     }
     
     //Updates the customer's name on the GUI.
@@ -42,21 +42,11 @@ public class AccountView extends javax.swing.JFrame {
         for (Rental rental : controller.getSelectedCustomer().getRentals())
         {
             Map rentedCarDetails = rental.getCar().getDetails();
-            dTableModel.addRow(new Object[]{false, rentedCarDetails.get("MALE"),
+            dTableModel.addRow(new Object[]{false, rentedCarDetails.get("MAKE"),
                 rentedCarDetails.get("MODEL"),
                 rentedCarDetails.get("YEAR"),
                 rental.getRentDate()
             });
-        }
-    }
-    private void populateAvailCars()
-    {
-        DefaultTableModel dTableModel = (DefaultTableModel) tblAvailableRentals.getModel();
-        //remove all rows before populating them
-        dTableModel.setRowCount(0);
-        for (Car car : controller.getAvailableCars())
-        {
-            dTableModel.addRow(new Object[]{false,car.getID(), car.getDetails().get("MAKE"), car.getDetails().get("MODEL"), car.getDetails().get("YEAR"), car.getDetails().get("SIZE")});
         }
     }
     
@@ -72,6 +62,17 @@ public class AccountView extends javax.swing.JFrame {
             case 2: tabContainer.setSelectedComponent(tabReturnedCars);
                 break;                    
         }     
+    }
+    
+    private void loadAvailableCars(List<Car> cars)
+    {
+        DefaultTableModel yourModel = (DefaultTableModel) tblAvailableCars.getModel();
+        yourModel.setRowCount(0); //Empty the table before repopulating data.
+        for (Car car: cars)
+        {
+            yourModel.addRow(new Object[]{false, car.getID(), car.getDetails().get("MAKE"),
+            car.getDetails().get("MODEL"), car.getDetails().get("YEAR"), car.getDetails().get("SIZE")});
+        }
     }
 
     /**
@@ -89,7 +90,7 @@ public class AccountView extends javax.swing.JFrame {
         txtFindCar = new javax.swing.JTextField();
         btnFindCarSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblAvailableRentals = new javax.swing.JTable();
+        tblAvailableCars = new javax.swing.JTable();
         btnRentSelected = new javax.swing.JButton();
         tabRentedCars = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -97,20 +98,22 @@ public class AccountView extends javax.swing.JFrame {
         btnReturnSelected = new javax.swing.JButton();
         tabReturnedCars = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tblAvailableRentals1 = new javax.swing.JTable();
+        tblReturnedCars = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblCustomerName.setText("Customer's Account");
 
         btnFindCarSearch.setLabel("Search");
+        btnFindCarSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindCarSearchActionPerformed(evt);
+            }
+        });
 
-        tblAvailableRentals.setModel(new javax.swing.table.DefaultTableModel(
+        tblAvailableCars.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Select", "ID", "Make", "Model", "Year", "Size"
@@ -120,7 +123,7 @@ public class AccountView extends javax.swing.JFrame {
                 java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, true
+                true, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -131,9 +134,14 @@ public class AccountView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblAvailableRentals);
+        jScrollPane1.setViewportView(tblAvailableCars);
 
         btnRentSelected.setText("Rent Selected");
+        btnRentSelected.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRentSelectedActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabFindCarLayout = new javax.swing.GroupLayout(tabFindCar);
         tabFindCar.setLayout(tabFindCarLayout);
@@ -168,10 +176,7 @@ public class AccountView extends javax.swing.JFrame {
 
         tblRentedCars.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Select", "Make", "Model", "Year", "Rented"
@@ -219,12 +224,9 @@ public class AccountView extends javax.swing.JFrame {
 
         tabContainer.addTab("Rented Cars", tabRentedCars);
 
-        tblAvailableRentals1.setModel(new javax.swing.table.DefaultTableModel(
+        tblReturnedCars.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Make", "Model", "Year", "Rented", "Returned"
@@ -245,7 +247,7 @@ public class AccountView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(tblAvailableRentals1);
+        jScrollPane3.setViewportView(tblReturnedCars);
 
         javax.swing.GroupLayout tabReturnedCarsLayout = new javax.swing.GroupLayout(tabReturnedCars);
         tabReturnedCars.setLayout(tabReturnedCarsLayout);
@@ -292,6 +294,26 @@ public class AccountView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnFindCarSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCarSearchActionPerformed
+        //Search for available cars
+        String query = txtFindCar.getText().trim().toLowerCase();
+        
+        List<Car> temp = controller.searchCars(query);
+        
+        loadAvailableCars(temp);
+        
+    }//GEN-LAST:event_btnFindCarSearchActionPerformed
+
+    private void btnRentSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentSelectedActionPerformed
+        //Rent the selected cars to the customer.
+        
+        //Grab selected cars and add car to rental object for customer.
+        for (int i = 0; i< tblAvailableCars.getRowCount(); i++)
+        {
+            
+        }
+    }//GEN-LAST:event_btnRentSelectedActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFindCarSearch;
     private javax.swing.JButton btnRentSelected;
@@ -304,9 +326,9 @@ public class AccountView extends javax.swing.JFrame {
     private javax.swing.JPanel tabFindCar;
     private javax.swing.JPanel tabRentedCars;
     private javax.swing.JPanel tabReturnedCars;
-    private javax.swing.JTable tblAvailableRentals;
-    private javax.swing.JTable tblAvailableRentals1;
+    private javax.swing.JTable tblAvailableCars;
     private javax.swing.JTable tblRentedCars;
+    private javax.swing.JTable tblReturnedCars;
     private javax.swing.JTextField txtFindCar;
     // End of variables declaration//GEN-END:variables
 }
