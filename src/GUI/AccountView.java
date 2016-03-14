@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
@@ -98,6 +99,36 @@ public class AccountView extends javax.swing.JFrame {
         {
             yourModel.addRow(new Object[]{false, car.getID(), car.getDetails().get("MAKE"),
             car.getDetails().get("MODEL"), car.getDetails().get("YEAR"), car.getDetails().get("SIZE")});
+        }
+    }
+    
+    //Rents or returns a car given specified inputs.
+    //Parameters:   JTable object to iterate through,
+    //              "rent" or "return" string to process.
+    private void processCar(javax.swing.JTable table, String processType)
+    {
+        boolean success = false; //To keep track if a vehicle is selected or not.
+        
+        //Grab selected cars and add car to rental object for customer.
+        for (int i = 0; i < table.getRowCount(); i++)
+        {
+            boolean value = (boolean) table.getValueAt(i,0);
+            String carID = (String) table.getValueAt(i,1);
+            
+            //If something is selected, proceed with the rental.
+            if (value == true){
+                //Rent the car
+                if (processType == "rent"){
+                    controller.rentCar(carID, controller.getSelectedCustomer());
+                }
+                else if (processType == "return"){
+                    controller.returnCar(carID);
+                }
+                success = true;
+            }
+        }
+        if (success == false){
+            JOptionPane.showMessageDialog(null, "Please select a car to " + processType +"!");
         }
     }
     
@@ -343,12 +374,11 @@ public class AccountView extends javax.swing.JFrame {
 
     private void btnRentSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentSelectedActionPerformed
         //Rent the selected cars to the customer.
+        processCar(tblAvailableCars,"rent");
         
-        //Grab selected cars and add car to rental object for customer.
-        for (int i = 0; i< tblAvailableCars.getRowCount(); i++)
-        {
-            
-        }
+        //Reload the available cars and rented cars tables.
+        loadAvailableCars(controller.getAvailableCars()); //Ideally this restores search results minus the rented cars.
+        populateRentedCars();
     }//GEN-LAST:event_btnRentSelectedActionPerformed
 
     private void btnReturnSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnSelectedActionPerformed
