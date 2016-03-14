@@ -31,9 +31,10 @@ public class Customer {
         this.address = Address;
     }
     
-    public boolean rentCar(Car car){
+    public void rentCar(Car car){
         
-        return rentals.add(new Rental(Calendar.getInstance(), car));
+       Rental newRental = new Rental(Calendar.getInstance(),car);
+       rentals.add(newRental);
     }
     
     public LinkedList<Rental> getRentals(){

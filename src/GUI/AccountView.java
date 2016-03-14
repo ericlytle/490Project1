@@ -11,8 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -20,15 +18,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AccountView extends javax.swing.JFrame {
     Controller controller = Controller.instance();
-    private LinkedList<String> selectedCars = new LinkedList<>();
-
+    
     //Constructor
     public AccountView() {
         initComponents();
         loadAvailableCars(controller.getAvailableCars());
     }
     
-    //Updates the customer's name on the GUI.
+    //Preliminary update of GUI components
     public void updateAccount()
     {
         //Make only the customer's name bold.
@@ -41,14 +38,14 @@ public class AccountView extends javax.swing.JFrame {
     }
     private void populateRentedCars()
     {
-        DefaultTableModel dTableModel = (DefaultTableModel) tblRentedCars.getModel();
+        DefaultTableModel rentedModel = (DefaultTableModel) tblRentedCars.getModel();
         //remove all rows before populating them
-        dTableModel.setRowCount(0);
+        rentedModel.setRowCount(0);
         for (Rental rental : controller.getSelectedCustomer().getRentals())
         {
             if (rental.getStatus().equals(String.valueOf(StatusEnum.Rented))){
                 Map rentedCarDetails = rental.getCar().getDetails();
-                dTableModel.addRow(new Object[]{false, rental.getCar().getID(), rentedCarDetails.get("MAKE"),
+                rentedModel.addRow(new Object[]{false, rental.getCar().getID(), rentedCarDetails.get("MAKE"),
                     rentedCarDetails.get("MODEL"),
                     rentedCarDetails.get("YEAR"),
                     rental.getRentDate()
@@ -59,15 +56,15 @@ public class AccountView extends javax.swing.JFrame {
     
     private void populateReturnedCars()
     {
-        DefaultTableModel dTableModel = (DefaultTableModel) tblReturnedCars.getModel();
+        DefaultTableModel returnedModel = (DefaultTableModel) tblReturnedCars.getModel();
         //clear the table before populating it
-        dTableModel.setRowCount(0);
+        returnedModel.setRowCount(0);
         //spin through customer rentals and populate returned cars on the table
         for (Rental rental : controller.getSelectedCustomer().getRentals())
         {
             if (rental.getStatus().equals(String.valueOf(StatusEnum.Returned))){
                 Map rentedCarDetails = rental.getCar().getDetails();
-                dTableModel.addRow(new Object[]{rental.getCar().getID(), rentedCarDetails.get("MAKE"),
+                returnedModel.addRow(new Object[]{rental.getCar().getID(), rentedCarDetails.get("MAKE"),
                     rentedCarDetails.get("MODEL"),
                     rentedCarDetails.get("YEAR"),
                     rental.getRentDate(),
@@ -131,7 +128,6 @@ public class AccountView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a car to " + processType +"!");
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -360,11 +356,7 @@ public class AccountView extends javax.swing.JFrame {
     private void btnFindCarSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindCarSearchActionPerformed
         //Search for available cars
         String query = txtFindCar.getText().trim().toLowerCase();
-        
-        List<Car> temp = controller.searchCars(query);
-        
-        loadAvailableCars(temp);
-        
+        loadAvailableCars(controller.searchCars(query)); //Refresh        
     }//GEN-LAST:event_btnFindCarSearchActionPerformed
 
     private void btnRentSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRentSelectedActionPerformed
@@ -372,7 +364,7 @@ public class AccountView extends javax.swing.JFrame {
         processCar(tblAvailableCars,"rent");
         
         //Reload the available cars and rented cars tables.
-        loadAvailableCars(controller.getAvailableCars()); //Ideally this restores search results minus the rented cars.
+        loadAvailableCars(controller.getAvailableCars());
         populateRentedCars();
     }//GEN-LAST:event_btnRentSelectedActionPerformed
 
@@ -382,7 +374,6 @@ public class AccountView extends javax.swing.JFrame {
         loadAvailableCars(controller.getAvailableCars());
         populateRentedCars();
         populateReturnedCars();
-        
     }//GEN-LAST:event_btnReturnSelectedActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFindCarSearch;
