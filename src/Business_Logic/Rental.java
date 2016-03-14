@@ -43,4 +43,9 @@ public class Rental {
         //return rented date in DAY/MONTH/YEAR format
         return this.rentDate.get(Calendar.MONTH) + "/" + this.rentDate.get(Calendar.DAY_OF_MONTH) + "/" + this.rentDate.get(Calendar.YEAR);
     }
+    
+    public String getReturnDate(){
+        //return rented date in DAY/MONTH/YEAR format
+        return this.returnDate.get(Calendar.MONTH) + "/" + this.returnDate.get(Calendar.DAY_OF_MONTH) + "/" + this.returnDate.get(Calendar.YEAR);
+    }
 }

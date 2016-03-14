@@ -124,7 +124,7 @@ public class Controller {
         }
     }
     public void returnCar(String CarID){
-        for (Rental rental : selectedCustomer.getRentals()){
+        for (Rental rental : this.selectedCustomer.getRentals()){
             if (rental.getCar().getID().equals(CarID)){
                 availCars.add(rental.returnCar(Calendar.getInstance()));
             }

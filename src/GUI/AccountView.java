@@ -36,6 +36,7 @@ public class AccountView extends javax.swing.JFrame {
         //Derive 'special' bold font.
         lblCustomerName.setFont(lblCustomerName.getFont().deriveFont(Font.PLAIN));
         populateRentedCars();
+        populateReturnedCars();
     }
     private void populateRentedCars()
     {
@@ -50,6 +51,26 @@ public class AccountView extends javax.swing.JFrame {
                     rentedCarDetails.get("MODEL"),
                     rentedCarDetails.get("YEAR"),
                     rental.getRentDate()
+                });
+            }
+        }
+    }
+    
+    private void populateReturnedCars()
+    {
+        DefaultTableModel dTableModel = (DefaultTableModel) tblReturnedCars.getModel();
+        //clear the table before populating it
+        dTableModel.setRowCount(0);
+        //spin through customer rentals and populate returned cars on the table
+        for (Rental rental : controller.getSelectedCustomer().getRentals())
+        {
+            if (rental.getStatus().equals(String.valueOf(StatusEnum.Returned))){
+                Map rentedCarDetails = rental.getCar().getDetails();
+                dTableModel.addRow(new Object[]{rental.getCar().getID(), rentedCarDetails.get("MAKE"),
+                    rentedCarDetails.get("MODEL"),
+                    rentedCarDetails.get("YEAR"),
+                    rental.getRentDate(),
+                    rental.getReturnDate()
                 });
             }
         }
@@ -331,17 +352,6 @@ public class AccountView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRentSelectedActionPerformed
 
     private void btnReturnSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnSelectedActionPerformed
-//        int row = tblRentedCars.getSelectedRow();
-//        int col = tblRentedCars.getSelectedColumn();
-//            if (row >= 0 && col == 0) { //the user selected the checkbox (it is at column 0)
-//                boolean value = (boolean) tblRentedCars.getValueAt(row, 0);
-//                String product_ID = (String) tblRentedCars.getValueAt(row, 1); //we just need the product ID
-//                if (value) {
-//                    selectedCars.add(product_ID);
-//                } else {
-//                    selectedCars.remove(product_ID);
-//                }
-//            }
         if (!selectedCars.isEmpty())
         {
             for (String carID : selectedCars){
@@ -349,6 +359,7 @@ public class AccountView extends javax.swing.JFrame {
             }
         }
         populateRentedCars();
+        populateReturnedCars();
         loadAvailableCars(controller.getAvailableCars());
     }//GEN-LAST:event_btnReturnSelectedActionPerformed
 
