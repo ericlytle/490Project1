@@ -5,6 +5,8 @@
  */
 package Business_Logic;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -41,11 +43,15 @@ public class Rental {
     
     public String getRentDate(){
         //return rented date in DAY/MONTH/YEAR format
-        return this.rentDate.get(Calendar.MONTH) + "/" + this.rentDate.get(Calendar.DAY_OF_MONTH) + "/" + this.rentDate.get(Calendar.YEAR);
+        DateFormat df = new SimpleDateFormat("MM/dd/yy"); // Just the year, with 2 digits
+        String formattedDate = df.format(this.rentDate.getTime());
+        return formattedDate;
     }
     
     public String getReturnDate(){
         //return rented date in DAY/MONTH/YEAR format
-        return this.returnDate.get(Calendar.MONTH) + "/" + this.returnDate.get(Calendar.DAY_OF_MONTH) + "/" + this.returnDate.get(Calendar.YEAR);
+        DateFormat df = new SimpleDateFormat("MM/dd/yy"); // Just the year, with 2 digits
+        String formattedDate = df.format(this.returnDate.getTime());
+        return formattedDate;
     }
 }

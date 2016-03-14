@@ -114,29 +114,23 @@ public class Controller {
         return results;
     }
     
-    public void rentCar(String CarID, Customer Cust){
+    //rent car with corresponding carID to the customer
+    public void rentCar(String CarID, Calendar rentDate){
         for (Car car: availCars){
             if (car.getID().equals(CarID)){
-                Cust.rentCar(car);
+                this.selectedCustomer.rentCar(car, rentDate);
                 availCars.remove(car);
                 return;
             }
         }
     }
-    public void returnCar(String CarID){
+    
+    //return the rental for the customer
+    public void returnCar(String CarID, Calendar returnDate){
         for (Rental rental : this.selectedCustomer.getRentals()){
-            if (rental.getCar().getID().equals(CarID)){
-                availCars.add(rental.returnCar(Calendar.getInstance()));
+            if (rental.getCar().getID().equals(CarID) && rental.getStatus().equals(String.valueOf(StatusEnum.Rented))){
+                availCars.add(rental.returnCar(returnDate));
             }
         }
     }
-    
-    //(String make, String model, int year, SizeEnum size){
-//    public static void main(String[] args){
-//        addCar("1", new CarSpecs("Ford", "Fusion", 2014, SizeEnum.Midsize));
-//        Car test = cars.getFirst();
-//        String tester;
-//        tester = String.valueOf(test.getDetails().get("MAKE"));
-//        addCar("1", new CarSpecs("Ford", "Fusion", 2014, SizeEnum.Midsize));
-//    }
 }

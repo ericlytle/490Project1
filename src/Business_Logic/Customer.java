@@ -31,9 +31,9 @@ public class Customer {
         this.address = Address;
     }
     
-    public void rentCar(Car car){
+    public void rentCar(Car car, Calendar rentDate){
         
-       Rental newRental = new Rental(Calendar.getInstance(),car);
+       Rental newRental = new Rental(rentDate,car);
        rentals.add(newRental);
     }
     

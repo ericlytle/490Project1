@@ -7,8 +7,12 @@ package GUI;
 
 import Business_Logic.*;
 import java.awt.Font;
-import java.util.LinkedList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -41,6 +45,7 @@ public class AccountView extends javax.swing.JFrame {
         DefaultTableModel rentedModel = (DefaultTableModel) tblRentedCars.getModel();
         //remove all rows before populating them
         rentedModel.setRowCount(0);
+        //spin through the customers rentals and populate the rentals table
         for (Rental rental : controller.getSelectedCustomer().getRentals())
         {
             if (rental.getStatus().equals(String.valueOf(StatusEnum.Rented))){
@@ -92,6 +97,7 @@ public class AccountView extends javax.swing.JFrame {
     {
         DefaultTableModel yourModel = (DefaultTableModel) tblAvailableCars.getModel();
         yourModel.setRowCount(0); //Empty the table before repopulating data.
+        //sprin through cars linked list and populate table with available cars
         for (Car car: cars)
         {
             yourModel.addRow(new Object[]{false, car.getID(), car.getDetails().get("MAKE"),
@@ -109,18 +115,41 @@ public class AccountView extends javax.swing.JFrame {
         //Grab selected cars and add car to rental object for customer.
         for (int i = 0; i < table.getRowCount(); i++)
         {
+            String sDate;
+            Calendar cCal = Calendar.getInstance();
+            Date dDate;
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             boolean value = (boolean) table.getValueAt(i,0);
             String carID = (String) table.getValueAt(i,1);
             
             //If something is selected, proceed with the rental.
             if (value == true){
-                //Rent the car
+                //display date dialog for each car entry selected along with the car ID in the title
+                //default text is set to the current days date
+                sDate = JOptionPane.showInputDialog(null, "Please enter " + processType +" date  (YYYY-MM_DD):", "Car " + carID + " " + processType+ " Date Entry", 
+                            JOptionPane.QUESTION_MESSAGE,null,null,format.format(cCal.getTime())).toString();
+                //attempt to format the entered date for storage
+                //display error message on incorrect date entry
+                try
+                {
+                    dDate = format.parse(sDate);
+                    cCal.setTime(dDate);
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(null, "Invalid Date Entry");
+                    return;
+                }
+                
+                //process the rental based on process type
                 if (processType == "rent"){
-                    controller.rentCar(carID, controller.getSelectedCustomer());
+
+                    controller.rentCar(carID, cCal);
                 }
                 else if (processType == "return"){
-                    controller.returnCar(carID);
+                    controller.returnCar(carID, cCal);
                 }
+                //if we get here, we have a car selected and processed
                 success = true;
             }
         }
@@ -369,8 +398,10 @@ public class AccountView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRentSelectedActionPerformed
 
     private void btnReturnSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnSelectedActionPerformed
+        //return the selected car
         processCar(tblRentedCars,"return");
         
+        //Reload the available cars, rented cars and returned cars tables
         loadAvailableCars(controller.getAvailableCars());
         populateRentedCars();
         populateReturnedCars();

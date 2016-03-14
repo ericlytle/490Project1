@@ -5,11 +5,8 @@
  */
 package GUI;
 
-import Business_Logic.CarSpecs;
 import Business_Logic.Controller;
 import Business_Logic.Customer;
-import Business_Logic.SizeEnum;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
