@@ -255,11 +255,6 @@ public class AccountView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblRentedCars.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                tblRentedCarsPropertyChange(evt);
-            }
-        });
         jScrollPane2.setViewportView(tblRentedCars);
 
         btnReturnSelected.setText("Return Selected");
@@ -382,34 +377,13 @@ public class AccountView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRentSelectedActionPerformed
 
     private void btnReturnSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnSelectedActionPerformed
-        if (!selectedCars.isEmpty())
-        {
-            for (String carID : selectedCars){
-                controller.returnCar(carID);
-            }
-        }
+        processCar(tblRentedCars,"return");
+        
+        loadAvailableCars(controller.getAvailableCars());
         populateRentedCars();
         populateReturnedCars();
-        loadAvailableCars(controller.getAvailableCars());
+        
     }//GEN-LAST:event_btnReturnSelectedActionPerformed
-
-    private void tblRentedCarsPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblRentedCarsPropertyChange
-        int row = tblRentedCars.getSelectedRow();
-        int col = tblRentedCars.getSelectedColumn();
-            if (row >= 0 && col == 0) { //the user selected the checkbox (it is at column 0)
-                boolean value = (boolean) tblRentedCars.getValueAt(row, 0);
-                String product_ID = (String) tblRentedCars.getValueAt(row, 1); //we just need the product ID
-                if (value) {
-                    if (!selectedCars.contains(product_ID))
-                        selectedCars.add(product_ID);                            
-                } else {
-                    selectedCars.remove(product_ID);
-                }
-            }    // TODO add your handling code here:
-    }//GEN-LAST:event_tblRentedCarsPropertyChange
-    
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFindCarSearch;
     private javax.swing.JButton btnRentSelected;
