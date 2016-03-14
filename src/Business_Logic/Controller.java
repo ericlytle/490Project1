@@ -123,8 +123,8 @@ public class Controller {
             }
         }
     }
-    public void returnCar(String CarID, Customer Cust){
-        for (Rental rental : Cust.getRentals()){
+    public void returnCar(String CarID){
+        for (Rental rental : selectedCustomer.getRentals()){
             if (rental.getCar().getID().equals(CarID)){
                 availCars.add(rental.returnCar(Calendar.getInstance()));
             }

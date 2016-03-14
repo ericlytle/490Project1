@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -17,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AccountView extends javax.swing.JFrame {
     Controller controller = Controller.instance();
+    private LinkedList<String> selectedCars = new LinkedList<>();
 
     //Constructor
     public AccountView() {
@@ -41,12 +44,14 @@ public class AccountView extends javax.swing.JFrame {
         dTableModel.setRowCount(0);
         for (Rental rental : controller.getSelectedCustomer().getRentals())
         {
-            Map rentedCarDetails = rental.getCar().getDetails();
-            dTableModel.addRow(new Object[]{false, rentedCarDetails.get("MAKE"),
-                rentedCarDetails.get("MODEL"),
-                rentedCarDetails.get("YEAR"),
-                rental.getRentDate()
-            });
+            if (rental.getStatus().equals(String.valueOf(StatusEnum.Rented))){
+                Map rentedCarDetails = rental.getCar().getDetails();
+                dTableModel.addRow(new Object[]{false, rental.getCar().getID(), rentedCarDetails.get("MAKE"),
+                    rentedCarDetails.get("MODEL"),
+                    rentedCarDetails.get("YEAR"),
+                    rental.getRentDate()
+                });
+            }
         }
     }
     
@@ -180,14 +185,14 @@ public class AccountView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Select", "Make", "Model", "Year", "Rented"
+                "Select", "ID", "Make", "Model", "Year", "Rented"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                true, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -198,9 +203,19 @@ public class AccountView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblRentedCars.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tblRentedCarsPropertyChange(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblRentedCars);
 
         btnReturnSelected.setText("Return Selected");
+        btnReturnSelected.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReturnSelectedActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabRentedCarsLayout = new javax.swing.GroupLayout(tabRentedCars);
         tabRentedCars.setLayout(tabRentedCarsLayout);
@@ -315,6 +330,45 @@ public class AccountView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRentSelectedActionPerformed
 
+    private void btnReturnSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnSelectedActionPerformed
+//        int row = tblRentedCars.getSelectedRow();
+//        int col = tblRentedCars.getSelectedColumn();
+//            if (row >= 0 && col == 0) { //the user selected the checkbox (it is at column 0)
+//                boolean value = (boolean) tblRentedCars.getValueAt(row, 0);
+//                String product_ID = (String) tblRentedCars.getValueAt(row, 1); //we just need the product ID
+//                if (value) {
+//                    selectedCars.add(product_ID);
+//                } else {
+//                    selectedCars.remove(product_ID);
+//                }
+//            }
+        if (!selectedCars.isEmpty())
+        {
+            for (String carID : selectedCars){
+                controller.returnCar(carID);
+            }
+        }
+        populateRentedCars();
+        loadAvailableCars(controller.getAvailableCars());
+    }//GEN-LAST:event_btnReturnSelectedActionPerformed
+
+    private void tblRentedCarsPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblRentedCarsPropertyChange
+        int row = tblRentedCars.getSelectedRow();
+        int col = tblRentedCars.getSelectedColumn();
+            if (row >= 0 && col == 0) { //the user selected the checkbox (it is at column 0)
+                boolean value = (boolean) tblRentedCars.getValueAt(row, 0);
+                String product_ID = (String) tblRentedCars.getValueAt(row, 1); //we just need the product ID
+                if (value) {
+                    if (!selectedCars.contains(product_ID))
+                        selectedCars.add(product_ID);                            
+                } else {
+                    selectedCars.remove(product_ID);
+                }
+            }    // TODO add your handling code here:
+    }//GEN-LAST:event_tblRentedCarsPropertyChange
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFindCarSearch;
     private javax.swing.JButton btnRentSelected;

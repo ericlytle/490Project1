@@ -71,6 +71,7 @@ public class CarRental {
         controller.addCar(Mercedes_1);
         
         controller.rentCar("1FF", Brett);
+        controller.rentCar("3A2", Brett);
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
