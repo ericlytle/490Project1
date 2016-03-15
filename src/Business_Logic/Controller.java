@@ -18,19 +18,20 @@ import java.util.Map;
  */
 public class Controller {
     private static Controller singleton;
-    private LinkedList<Car> availCars = new LinkedList<>();
-    private LinkedList<Customer> customers = new LinkedList<>();
+    private LinkedList<Car> availCars = new LinkedList<>();             //Stores all available cars in the system.
+    private LinkedList<Customer> customers = new LinkedList<>();        //Stores all of the customer's in the system.
+    private LinkedList<Customer> searchResults = new LinkedList<>();    //Stores customer search results.
     
-        public static Controller instance(){
+    public static Controller instance(){
         if (singleton == null){
             singleton = new Controller();
         }
         return singleton;
     }
     
-    //*******************************************************************    
-    //This is updated with customers from the search result
-    private LinkedList<Customer> searchResults = new LinkedList<>();
+    //*******************************************************************
+    //Customer Methods
+    //*******************************************************************
     
     //The customer whose account is to be viewed.
     private Customer selectedCustomer = new Customer();
@@ -41,27 +42,59 @@ public class Controller {
         return selectedCustomer;
     }
     
+    //Add a customer to the search results (as a result of a query).
     public void addSearchCustomer(Customer customer)
     {
         searchResults.add(customer);
     }
     
+    //Retreive the search results.
     public List<Customer> getSearchResults()
     {
         return Collections.unmodifiableList(searchResults);
     }
     
+    //Reset the search results.
     public void resetSearchResults()
     {
         searchResults.clear();
     }
     
+    //Set given customer as the customer whose account is to be viewed.
     public void setSelectedCustomer(Customer cust)
     {
         selectedCustomer = cust;
     }
+    
+    public void addCustomer(Customer cust){
+        customers.add(cust);
+    }
+    
+    public List<Customer> getAllCustomers(){
+        return Collections.unmodifiableList(customers);
+    }
+    
+    //Returns a list of customers that contain/satisfy the search criteria.
+    public List<Customer> customerSearch(String query)
+    {
+        List<Customer> results = new LinkedList<>();
+        
+        for (Customer customer : customers)
+        {
+            if (customer.getName().toLowerCase().contains(query) ||
+                    customer.getPhone().toLowerCase().contains(query) ||
+                    customer.getAddress().toLowerCase().contains(query))
+            {
+                results.add(customer);
+            }
+        }
+        return results;
+    }
+    
     //*******************************************************************
-
+    //Car Methods
+    //*******************************************************************
+    
     public void addCar(Car car){
         availCars.add(car);
     }
@@ -85,36 +118,11 @@ public class Controller {
         return carSearchResults;
     }
     
-    public List<Customer> getAllCustomers(){
-        return Collections.unmodifiableList(customers);
-    }
-    
     public List<Car> getAvailableCars(){
         return Collections.unmodifiableList(availCars);
     }
-    
-    public void addCustomer(Customer cust){
-        customers.add(cust);
-    }
-    
-    //Returns a list of customers that contain/satisfy the search criteria.
-    public List<Customer> customerSearch(String query)
-    {
-        List<Customer> results = new LinkedList<>();
-        
-        for (Customer customer : customers)
-        {
-            if (customer.getName().toLowerCase().contains(query) ||
-                    customer.getPhone().toLowerCase().contains(query) ||
-                    customer.getAddress().toLowerCase().contains(query))
-            {
-                results.add(customer);
-            }
-        }
-        return results;
-    }
-    
-    //rent car with corresponding carID to the customer
+
+    //Rent car with corresponding carID to the customer.
     public void rentCar(String CarID, Calendar rentDate){
         for (Car car: availCars){
             if (car.getID().equals(CarID)){
@@ -125,7 +133,7 @@ public class Controller {
         }
     }
     
-    //return the rental for the customer
+    //Return the rental for the customer.
     public void returnCar(String CarID, Calendar returnDate){
         for (Rental rental : this.selectedCustomer.getRentals()){
             if (rental.getCar().getID().equals(CarID) && rental.getStatus().equals(String.valueOf(StatusEnum.Rented))){
@@ -134,3 +142,5 @@ public class Controller {
         }
     }
 }
+
+//*******************************************************************

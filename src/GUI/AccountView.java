@@ -29,7 +29,7 @@ public class AccountView extends javax.swing.JFrame {
         loadAvailableCars(controller.getAvailableCars());
     }
     
-    //Preliminary update of GUI components
+    //Update of GUI components before the form is visible.
     public void updateAccount()
     {
         //Make only the customer's name bold.
@@ -37,15 +37,19 @@ public class AccountView extends javax.swing.JFrame {
         lblCustomerName.setText(custName);
         //Derive 'special' bold font.
         lblCustomerName.setFont(lblCustomerName.getFont().deriveFont(Font.PLAIN));
+        
+        //Populate rented car and returned car tables.
         populateRentedCars();
         populateReturnedCars();
     }
+    
+    //Populates the rented cars table.
     private void populateRentedCars()
     {
         DefaultTableModel rentedModel = (DefaultTableModel) tblRentedCars.getModel();
-        //remove all rows before populating them
+        //Remove all rows before populating the table.
         rentedModel.setRowCount(0);
-        //spin through the customers rentals and populate the rentals table
+        //Spin through the customers rentals and populate the rentals table.
         for (Rental rental : controller.getSelectedCustomer().getRentals())
         {
             if (rental.getStatus().equals(String.valueOf(StatusEnum.Rented))){
@@ -59,12 +63,13 @@ public class AccountView extends javax.swing.JFrame {
         }
     }
     
+    //Populates the returned cars table.
     private void populateReturnedCars()
     {
         DefaultTableModel returnedModel = (DefaultTableModel) tblReturnedCars.getModel();
-        //clear the table before populating it
+        //Clear the table before populating it.
         returnedModel.setRowCount(0);
-        //spin through customer rentals and populate returned cars on the table
+        //Spin through customer rentals and populate returned cars on the table.
         for (Rental rental : controller.getSelectedCustomer().getRentals())
         {
             if (rental.getStatus().equals(String.valueOf(StatusEnum.Returned))){
@@ -93,11 +98,12 @@ public class AccountView extends javax.swing.JFrame {
         }     
     }
     
+    //Loads the available car table with the car list specified.
     private void loadAvailableCars(List<Car> cars)
     {
         DefaultTableModel yourModel = (DefaultTableModel) tblAvailableCars.getModel();
         yourModel.setRowCount(0); //Empty the table before repopulating data.
-        //sprin through cars linked list and populate table with available cars
+        //Spin through cars linked list and populate table with available cars.
         for (Car car: cars)
         {
             yourModel.addRow(new Object[]{false, car.getID(), car.getDetails().get("MAKE"),
@@ -106,8 +112,8 @@ public class AccountView extends javax.swing.JFrame {
     }
     
     //Rents or returns a car given specified inputs.
-    //Parameters:   JTable object to iterate through,
-    //              "rent" or "return" string to process.
+    //Params:   JTable object to iterate through row by row,
+    //          "rent" or "return" string used to process the car in the specified way.
     private void processCar(javax.swing.JTable table, String processType)
     {
         boolean success = false; //To keep track if a vehicle is selected or not.
@@ -124,24 +130,24 @@ public class AccountView extends javax.swing.JFrame {
             
             //If something is selected, proceed with the rental.
             if (value == true){
-                //display date dialog for each car entry selected along with the car ID in the title
-                //default text is set to the current days date
-                sDate = JOptionPane.showInputDialog(null, "Please enter " + processType +" date  (YYYY-MM_DD):", "Car " + carID + " " + processType+ " Date Entry", 
+                //Display date dialog for each car entry selected along with the car ID in the title.
+                //Default text is set to the current day's date.
+                sDate = JOptionPane.showInputDialog(null, "Please enter " + processType 
+                        +" date  (YYYY-MM_DD):", "Car " + carID + " " + processType+ " Date Entry", 
                             JOptionPane.QUESTION_MESSAGE,null,null,format.format(cCal.getTime())).toString();
-                //attempt to format the entered date for storage
-                //display error message on incorrect date entry
-                try
+                
+                try //Attempt to format the entered date for storage.
                 {
                     dDate = format.parse(sDate);
                     cCal.setTime(dDate);
                 }
-                catch(Exception e)
+                catch(Exception e) //Display error message on incorrect date entry.
                 {
                     JOptionPane.showMessageDialog(null, "Invalid Date Entry");
                     return;
                 }
                 
-                //process the rental based on process type
+                //Process the rental based on process type.
                 if (processType == "rent"){
 
                     controller.rentCar(carID, cCal);
@@ -149,10 +155,11 @@ public class AccountView extends javax.swing.JFrame {
                 else if (processType == "return"){
                     controller.returnCar(carID, cCal);
                 }
-                //if we get here, we have a car selected and processed
+                //If we get here, we have a car selected and processed.
                 success = true;
             }
         }
+        //The user hasn't selected a vehicle to process.
         if (success == false){
             JOptionPane.showMessageDialog(null, "Please select a car to " + processType +"!");
         }

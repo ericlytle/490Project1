@@ -167,6 +167,7 @@ public class CustomerSearch extends javax.swing.JFrame {
         //Select the ReturnedCars tab.
         accountView.setStartTab(1);
 
+        //Verify a customer is selected and show form.
         if (checkSelection() == true){
             accountView.setVisible(true);
         }
@@ -187,6 +188,7 @@ public class CustomerSearch extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    //Populates the table of customers with the specified list of customers.
     private void LoadAllCustomers(List<Customer> customers){
         DefaultTableModel yourModel = (DefaultTableModel) tblCustomers.getModel();
         for (Customer cust:customers){

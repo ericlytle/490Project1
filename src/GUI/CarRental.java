@@ -13,8 +13,6 @@ import Business_Logic.*;
  */
 public class CarRental {
     
-
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -40,7 +38,6 @@ public class CarRental {
         //</editor-fold>
         Controller controller = Controller.instance();
         
-        
         //Create customers, car specs, and cars.
         Customer Jim = new Customer("Jim", "8168888888", "123 School Street");
         Customer Brett = new Customer("Brett", "8176534343", "123 University Street");
@@ -58,7 +55,6 @@ public class CarRental {
         Car BMW_1 = new Car("3A2", BMW740iL);
         Car Mercedes_1 = new Car("5BB",MercedesSL500);
         
-        
         //Add customers and cars.
         controller.addCustomer(Jim);
         controller.addCustomer(Brett);
@@ -70,7 +66,7 @@ public class CarRental {
         controller.addCar(BMW_1);
         controller.addCar(Mercedes_1);
         
-        /* Create and display the form */
+        //Create and display the form.
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CustomerSearch().setVisible(true);
